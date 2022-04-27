@@ -69,6 +69,9 @@ class DDLGenerator {
     if (options.quoteIdentifiers) {
       return '`' + id + '`'
     }
+    if(options.dbms === 'oracle') {
+      id=id.toUpperCase();
+    }
     return id
   }
 
@@ -121,6 +124,20 @@ class DDLGenerator {
     }
     return line
   }
+
+  /**
+   * Return DDL column comment
+   * @param {type.ERDEntity} table
+   * @param {type.ERDColumn} elem
+   * @param {Object} options
+   * @return {String}
+   */
+  getColumnComment (table,elem, options) {
+    var self = this
+    var line = 'comment on column '+self.getId(table.name, options)+"."+self.getId(elem.name, options)+" is '"+elem.documentation+"';";
+    return line
+  }
+
 
   /**
    * Write Foreign Keys
@@ -231,8 +248,35 @@ class DDLGenerator {
     codeWriter.outdent()
     codeWriter.writeLine(');')
     codeWriter.writeLine()
+    //write the comment
+    this.writeComment(codeWriter,elem,options);
   }
 
+  /**
+   * Write Comment
+   * @param {StringWriter} codeWriter
+   * @param {type.ERDEntity} elem
+   * @param {Object} options
+   */
+  writeComment (codeWriter, elem, options) {
+    var self = this
+    var lines = []
+
+    codeWriter.writeLine('comment on table '+self.getId(elem.name, options)+" is '"+elem.documentation+"'; ");
+
+    // Columns
+    elem.columns.forEach(function (col) {
+      lines.push(self.getColumnComment(elem,col, options))
+    })
+
+    // Write lines
+    for (var i = 0, len = lines.length; i < len; i++) {
+      codeWriter.writeLine(lines[i])
+    }
+
+    codeWriter.outdent()
+    codeWriter.writeLine()
+  }
   /**
    * Generate codes from a given element
    * @param {type.Model} elem

@@ -1,15 +1,19 @@
 {
-  "name": "niklauslee.staruml-ddl",
+  "name": "sunfuyong.staruml-ddl",
   "title": "DDL (Data Definition Language)",
   "description": "Generate DDL (Data Definition Language) from ERD",
-  "homepage": "https://github.com/niklauslee/staruml-ddl",
-  "issues": "https://github.com/niklauslee/staruml-ddl/issues",
-  "keywords": ["ddl", "erd", "database"],
-  "version": "0.9.2",
+  "homepage": "https://github.com/sunfuyong/staruml-ddl",
+  "issues": "https://github.com/sunfuyong/staruml-ddl/issues",
+  "keywords": [
+    "ddl",
+    "erd",
+    "database"
+  ],
+  "version": "1.0.1",
   "author": {
-    "name": "Minkyu Lee",
-    "email": "niklaus.lee@gmail.com",
-    "url": "https://github.com/niklauslee"
+    "name": "sunfuyong",
+    "email": "sunfuyongl@163.com",
+    "url": "https://github.com/sunfuyong"
   },
   "license": "MIT",
   "engines": {
